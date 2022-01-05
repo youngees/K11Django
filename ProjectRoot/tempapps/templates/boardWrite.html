@@ -13,6 +13,20 @@
     <style>
     	div{border:0px solid blueviolet;}
     	*{font-size: 12px;}
+		.w100{width: 100px;}
+		.w200{width: 200px;}
+		/*
+		웹브라우저의 개발자모드에서 인스펙트를 통해 복사한 셀렉터를 통해 스타일을 부여한다.
+		table의 모든 th태그에 수평/수직 방향으로 가운데 정렬한다.
+		*/
+		/*
+		body > div > div:nth-child(2) > div.col-9.pt-3 > form > table > tbody > tr > th  {
+			text-align: center; vertical-align: middle;
+		}
+		*/
+
+		/* 테이블에 id속성을 부여한 후 하위의 th태그 전체를 선택하여 스타일을 부여한다. */
+		#writeTable tr th {text-align: center; vertical-align: middle;}
 	</style>
 </head>
 <body>
@@ -119,7 +133,7 @@
        	 
         	<form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-            	<table class="table table-bordered">
+            	<table class="table table-bordered" id="writeTable">
             	<colgroup>
                 	<col width="20%"/>
                 	<col width="*"/>

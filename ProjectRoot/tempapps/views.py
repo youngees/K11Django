@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from tempapps.forms import QuestionForm
-from tempapps.forms import QuestionForm2
+from tempapps.forms import WriteForm
 
 
 # tempapps의 index 화면 : 바로가기 링크만 있음 
@@ -44,6 +44,7 @@ def templateTag(request):
     context = {'books': books, 'hobbys':hobbys, 'favorites':favorites, 'iVar':iVar}
     return render(request, 'template_tag.html', context)
 
+
 # 장고의 폼 생성기능 사용하기 
 def formCreate(request):
     '''
@@ -74,23 +75,32 @@ def formCreate(request):
 def thanks(request):
     return render(request, 'thanks.html')
 
-# 실습용 글쓰기 게시판 
+
+
+'''
+# 실습용 글쓰기 게시판 (내 버전)
 def boardWrite(request):
     if request.method == 'POST':
-        # 진입시 전송방식이 POST라면 submit된 폼값을 처리한다. 
-        form = QuestionForm2(request.POST)
-        # 폼값의 유효성 빈값 검증을 한다.
+        form = bWriteForm(request.POST)
+        
         if form.is_valid():
-            # 폼 데이터가 유효하면 클린데이터로 복사한다. 
             user_id = form.cleaned_data['user_id']
-            # user_id 외에 title, content도 동일한 방식으로 저장할 수 있다.
-
-            # 폼 데이터에 문제가 없다면 DB에 입력하거나 혹은 비즈니스로직을 수행한다.
-
-            #return HttpResponseRedirect('/thanks/') # 페이지 이동
             return render(request, 'thanks.html', {'user_id': user_id}) #템플릿 렌더링
     else:
-        # 전송방식이 GET이라면 입력폼으로 진입한다. 
-        form = QuestionForm2()
-    # 입력폼 진입을 위해 템플릿을 렌더링한다. 
+        form = bWriteForm()
+    
     return render(request, 'boardWrite.html', {'form':form})
+'''
+
+
+
+# 선생님 버전 글쓰기 게시판 
+def boardWrite(request):
+# template_path = ''
+    if request.method == 'POST':
+        template_path = 'boardWrite.html'
+    else:
+        form = WriteForm()
+        template_path = 'boardWrite.html'
+    # 입력폼 진입을 위해 템플릿을 렌더링한다.
+    return render(request, template_path, {'form':form})
